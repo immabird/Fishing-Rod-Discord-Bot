@@ -1,6 +1,6 @@
 data "archive_file" "fishing_rod_bot_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/../source"
+  source_dir  = "${path.module}/../../fishing_rod_bot"
   output_path = "${path.module}/fish.zip"
 }
 
