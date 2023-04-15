@@ -1,6 +1,7 @@
 const discord = require("discord.js-selfbot");
 const aws = require("aws-sdk");
 const config = require("./config.json");
+const discord_api_token = process.env.DISCORD_API_TOKEN
 
 const dynamodb = new aws.DynamoDB.DocumentClient();
 const bot = new discord.Client();
@@ -20,7 +21,7 @@ async function handler() {
 
 async function login() {
     try {
-        await bot.login(config.token);
+        await bot.login(discord_api_token);
         console.log("Bot logged in successfully.");
     } catch (error) {
         console.error("Failed to login to Discord. Error:", error);

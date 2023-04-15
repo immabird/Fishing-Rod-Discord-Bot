@@ -1,7 +1,35 @@
+locals {
+  fish_folder        = "${path.module}/${var.fishing_rod_bot_code_path}"
+  fish_files         = fileset(local.fish_folder, "*.js")
+  fish_hashes        = [for file in local.fish_files : sha256(file("${local.fish_folder}/${file}"))]
+  fish_hashes_string = join(",", local.fish_hashes)
+}
+
+resource "terraform_data" "install_npm_packages" {
+  triggers_replace = [
+    sha256(file("${local.fish_folder}/package.json")),
+    sha256(file("${local.fish_folder}/package-lock.json")),
+    sha256(local.fish_hashes_string)
+  ]
+  provisioner "local-exec" {
+    working_dir = local.fish_folder
+    command     = "npm install"
+  }
+}
+
 data "archive_file" "fishing_rod_bot_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/../../fishing_rod_bot"
+  source_dir  = local.fish_folder
   output_path = "${path.module}/fish.zip"
+
+  depends_on = [
+    terraform_data.install_npm_packages
+  ]
+}
+
+data "aws_ssm_parameter" "discord_api_token" {
+  name            = var.discord_api_token_ssm_path
+  with_decryption = false
 }
 
 resource "aws_lambda_function" "fishing_rod_bot" {
@@ -14,6 +42,12 @@ resource "aws_lambda_function" "fishing_rod_bot" {
   runtime          = "nodejs12.x"
   memory_size      = 128
   timeout          = 10
+
+  environment {
+    variables = {
+      "DISCORD_API_TOKEN" = data.aws_ssm_parameter.discord_api_token.value
+    }
+  }
 }
 
 resource "aws_iam_role" "fishing_rod_bot" {
