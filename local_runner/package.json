@@ -1,0 +1,9 @@
+{
+    "name": "fish",
+    "version": "1.0.0",
+    "main": "fish.js",
+    "dependencies": {
+        "discord.js-selfbot": "^12.0.2",
+        "fs": "0.0.1-security"
+    }
+}

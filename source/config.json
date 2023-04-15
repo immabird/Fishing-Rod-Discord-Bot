@@ -1,0 +1,35 @@
+{
+    "username": "FishyBoy",
+    "token": "",
+    "servers": [
+        {
+            "name": "The Rocket League Boyz",
+            "channels": {
+                "fishfarm": "785716061915709440",
+                "lottery": "785717979635384370"
+            }
+        },
+        {
+            "name": "AlexLikesBoys",
+            "channels": {
+                "fishfarm": "785531235387834408",
+                "lottery": "784609176894308362"
+            }
+        }
+    ],
+    "fishies": [
+        ":fish:",
+        ":shark:",
+        ":dolphin:",
+        ":crab:",
+        ":octopus:",
+        ":blowfish:",
+        ":seal:",
+        ":whale:",
+        ":tropical_fish:",
+        ":squid:",
+        ":shrimp:",
+        ":whale2:",
+        ":lobster:"
+    ]
+}

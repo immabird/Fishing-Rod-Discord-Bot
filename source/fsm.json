@@ -1,0 +1,27 @@
+{
+    "Comment": "A Hello World example of the Amazon States Language using Pass states",
+    "StartAt": "Fish1",
+    "States": {
+      "Fish1": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::lambda:invoke",
+        "Parameters": {
+          "FunctionName": "arn:aws:lambda:us-east-2:969146440405:function:Fishing-Rod-Bot:$LATEST"
+        },
+        "Next": "Wait1"
+      },
+      "Wait1": {
+        "Type": "Wait",
+        "Seconds": 15,
+        "Next": "Fish2"
+      },
+      "Fish2": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::lambda:invoke",
+        "Parameters": {
+          "FunctionName": "arn:aws:lambda:us-east-2:969146440405:function:Fishing-Rod-Bot:$LATEST"
+        },
+        "End": true
+      }
+    }
+  }
